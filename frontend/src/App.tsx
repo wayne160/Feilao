@@ -1,8 +1,9 @@
 import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
-import Contact from './pages/Contact'
 import Navbar from './components/Navbar'
 import './App.css'
+import Dried from './pages/Dried'
+import Soup from './pages/Soup'
 
 function App() {
   return (
@@ -11,7 +12,8 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/contact" element={<Contact />} />
+        <Route path="/dried" element={<Dried />} />
+        <Route path="/soup" element={<Soup />} />
       </Routes>
     </>
   )
