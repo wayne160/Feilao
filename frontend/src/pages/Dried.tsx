@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import heroImage from '../assets/hero.png'
 import { oneCombos } from '../data/oneCombo'
-import { twoCombos } from '../data/twoCombo'
-import { threeCombos } from '../data/threeCombo'
+// import { twoCombos } from '../data/twoCombo'
+// import { threeCombos } from '../data/threeCombo'
 
 const combos = ['1 Combination', '2 Combinations', '3 Combinations']
 const meats = ['Beef', 'Crispy Pork', 'BBQ Pork', 'Intestines', 'Beef Tripe', 'Pork Tripe', 'Grilled Sausage']
@@ -119,7 +119,7 @@ function Dried() {
                     })}
                 </div>
             </div>
-            {priceRange.min}-{priceRange.max}
+            {priceRange?.min}-{priceRange?.max}
         </div>
     )
 }
