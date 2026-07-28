@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react'
 import heroImage from '../assets/hero.png'
+import { oneCombos } from '../data/oneCombo'
+import { twoCombos } from '../data/twoCombo'
+import { threeCombos } from '../data/threeCombo'
 
 const combos = ['1 Combination', '2 Combinations', '3 Combinations']
 const meats = ['Beef', 'Crispy Pork', 'BBQ Pork', 'Intestines', 'Beef Tripe', 'Pork Tripe', 'Grilled Sausage']
@@ -11,16 +14,20 @@ function Dried() {
     const [extraNoodles, setExtraNoodles] = useState(false)
     const [extraMeat, setExtraMeat] = useState<string | null>(null)
     const comboNumber = combos.indexOf(combo) + 1
+    const [priceRange, setPriceRange] = useState<{ min: number; max: number } | null>({ min: 15, max: 25 });
     const toggleMeat = (meat: string) => {
-        setSelectedMeats((prev) => {
-            if (prev.includes(meat)) {
-                return prev.filter((item) => item !== meat)
-            }
-            if (prev.length >= comboNumber) {
-                return prev
-            }
-            return [...prev, meat]
-        })
+        const next = selectedMeats.includes(meat)
+            ? selectedMeats.filter((item) => item !== meat)
+            : selectedMeats.length >= comboNumber
+                ? (comboNumber === 1 ? [meat] : selectedMeats)
+                : [...selectedMeats, meat]
+
+        setSelectedMeats(next)
+
+        if (comboNumber === 1) {
+            const combo = oneCombos.find((c) => c.protein === next[0])
+            setPriceRange({ min: combo?.price || 0, max: combo?.price || 0 })
+        }
     }
 
     useEffect(() => {
@@ -38,20 +45,17 @@ function Dried() {
             <div className="mt-4 text-2xl font-semibold text-primary">Select Combination</div>
             <div className="mt-2 flex gap-3">
                 {combos.map((option) => (
-                    <label
+                    <button
+                        type="button"
                         key={option}
-                        className="flex flex-1 items-center justify-center gap-1 whitespace-nowrap rounded-lg border border-primary px-1 py-1.5 text-xs font-semibold text-primary"
+                        onClick={() => setCombo(option)}
+                        className={
+                            'flex-1 whitespace-nowrap rounded-lg border border-primary px-1 py-1.5 text-xs font-semibold text-primary ' +
+                            (combo === option ? 'bg-[#d3b48c]' : '')
+                        }
                     >
-                        <input
-                            type="radio"
-                            name="combo"
-                            value={option}
-                            checked={combo === option}
-                            onChange={() => setCombo(option)}
-                            className="accent-primary"
-                        />
                         {option}
-                    </label>
+                    </button>
                 ))}
             </div>
             <div className="mt-4 text-2xl font-semibold text-primary">Select Meats</div>
@@ -59,24 +63,21 @@ function Dried() {
             <div className="mt-4 flex flex-wrap justify-center gap-3">
                 {meats.map((meat) => {
                     const checked = selectedMeats.includes(meat)
-                    const disabled = !checked && selectedMeats.length >= comboNumber
+                    const disabled = !checked && comboNumber > 1 && selectedMeats.length >= comboNumber
                     return (
-                        <label
+                        <button
+                            type="button"
                             key={meat}
+                            disabled={disabled}
+                            onClick={() => toggleMeat(meat)}
                             className={
-                                'flex w-[calc((100%-2.25rem)/4)] flex-col items-center justify-center gap-1 rounded-lg border border-primary px-1 py-2 text-center text-xs font-semibold text-primary ' +
-                                (disabled ? 'opacity-40' : '')
+                                'flex w-[calc((100%-2.25rem)/4)] items-center justify-center rounded-lg border border-primary px-1 py-2 text-center text-xs font-semibold text-primary ' +
+                                (checked ? 'bg-[#d3b48c]' : '') +
+                                (disabled ? ' opacity-40' : '')
                             }
                         >
                             {meat}
-                            <input
-                                type="checkbox"
-                                checked={checked}
-                                disabled={disabled}
-                                onChange={() => toggleMeat(meat)}
-                                className="accent-primary"
-                            />
-                        </label>
+                        </button>
                     )
                 })}
             </div>
@@ -102,23 +103,23 @@ function Dried() {
                     {extraMeats.map((meat) => {
                         const checked = extraMeat === meat
                         return (
-                            <label
+                            <button
+                                type="button"
                                 key={meat}
-                                className="flex flex-col items-center justify-center gap-1 rounded-lg border border-primary px-1 py-2 text-center text-xs font-semibold text-primary"
+                                onClick={() => setExtraMeat((prev) => (prev === meat ? null : meat))}
+                                className={
+                                    'flex flex-col items-center justify-center gap-1 rounded-lg border border-primary px-1 py-2 text-center text-xs font-semibold text-primary ' +
+                                    (checked ? 'bg-[#d3b48c]' : '')
+                                }
                             >
                                 {meat} <br />
                                 +$8
-                                <input
-                                    type="checkbox"
-                                    checked={checked}
-                                    onChange={() => setExtraMeat((prev) => (prev === meat ? null : meat))}
-                                    className="accent-primary"
-                                />
-                            </label>
+                            </button>
                         )
                     })}
                 </div>
             </div>
+            {priceRange.min}-{priceRange.max}
         </div>
     )
 }
