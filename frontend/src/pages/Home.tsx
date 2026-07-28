@@ -26,6 +26,14 @@ function Home() {
         ))}
       </div>
 
+      <button
+        type="button"
+        className="mt-4 self-end rounded-lg border border-primary px-4 py-2 font-semibold text-primary"
+        onClick={() => fetch("http://127.0.0.1:8000/print")}
+      >
+        Print
+      </button>
+
       {active === 'Rice Noodles' && (
         <div className="mt-4 grid w-3/4 grid-cols-1 gap-4 mx-auto">
             <button

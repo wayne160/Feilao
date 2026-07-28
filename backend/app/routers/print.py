@@ -28,4 +28,6 @@ def print_test() -> dict[str, str]:
             win32print.EndDocPrinter(hPrinter)
     finally:
         win32print.ClosePrinter(hPrinter)
-    
+
+    return {"status": "ok"}
+
