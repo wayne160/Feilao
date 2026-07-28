@@ -1,17 +1,19 @@
+import os
+
+from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.routers import health
 from app.routers import print as print_router
 
+load_dotenv()
+
 app = FastAPI(title="Feilao API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-    ],
+    allow_origins=os.getenv("CORS_ORIGINS", "").split(","),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

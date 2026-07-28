@@ -8,4 +8,5 @@ dependencies = [
     "fastapi>=0.139.2",
     "uvicorn[standard]>=0.51.0",
     "python-escpos[win32]>=3.1",
+    "python-dotenv>=1.2.2",
 ]
