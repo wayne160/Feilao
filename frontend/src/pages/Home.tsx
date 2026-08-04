@@ -34,6 +34,18 @@ function Home() {
         Print
       </button>
 
+      <button
+        type="button"
+        className="mt-4 self-end rounded-lg border border-primary px-4 py-2 font-semibold text-primary"
+        onClick={async () => {
+          const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/hello`)
+          const data = await res.json()
+          console.log(data)
+        }}
+      >
+        Hello
+      </button>
+
       {active === 'Rice Noodles' && (
         <div className="mt-4 grid w-3/4 grid-cols-1 gap-4 mx-auto">
             <button
