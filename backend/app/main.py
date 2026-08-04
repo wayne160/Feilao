@@ -21,6 +21,8 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Feilao API", lifespan=lifespan)
 
+print(os.getenv("CORS_ORIGINS"))
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=os.getenv("CORS_ORIGINS", "").split(","),
