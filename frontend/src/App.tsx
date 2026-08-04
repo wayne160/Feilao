@@ -4,6 +4,7 @@ import Navbar from './components/Navbar'
 import './App.css'
 import Dried from './pages/Dried'
 import Soup from './pages/Soup'
+import PrintTest from './pages/PrintTest'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/dried" element={<Dried />} />
         <Route path="/soup" element={<Soup />} />
+        <Route path="/print-test" element={<PrintTest />} />
       </Routes>
     </>
   )

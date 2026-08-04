@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
 from app.db import get_db
@@ -22,6 +22,17 @@ def create_print_order(order: PrintOrderIn) -> dict[str, int | str]:
         return {"id": cursor.lastrowid, "status": "pending"}
 
 
+@router.get("/print-queue/first")
+def get_first_print_order() -> dict:
+    with get_db() as conn:
+        row = conn.execute(
+            "SELECT * FROM print_queue WHERE status = 'pending' ORDER BY id LIMIT 1"
+        ).fetchone()
+        if row is None:
+            raise HTTPException(status_code=404, detail="No pending print jobs")
+        return dict(row)
+
+
 @router.get("/print-queue")
 def list_print_orders() -> list[dict]:
     with get_db() as conn:
@@ -35,3 +46,16 @@ def clear_print_orders() -> dict[str, str]:
         conn.execute("DELETE FROM print_queue")
         conn.commit()
         return {"status": "cleared"}
+
+
+@router.delete("/print-queue/first")
+def delete_first_print_order() -> dict:
+    with get_db() as conn:
+        row = conn.execute(
+            "SELECT * FROM print_queue WHERE status = 'pending' ORDER BY id LIMIT 1"
+        ).fetchone()
+        if row is None:
+            raise HTTPException(status_code=404, detail="No pending print jobs")
+        conn.execute("DELETE FROM print_queue WHERE id = ?", (row["id"],))
+        conn.commit()
+        return dict(row)

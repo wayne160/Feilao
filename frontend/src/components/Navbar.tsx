@@ -31,6 +31,15 @@ function Navbar() {
           >
             Menu
           </NavLink>
+          <NavLink
+            to="/print-test"
+            className={({ isActive }) =>
+              'font-medium no-underline ' +
+              (isActive ? 'text-[#ffb37a] opacity-100' : 'text-[#e6d5c7] opacity-80 hover:opacity-100')
+            }
+          >
+            Print Test
+          </NavLink>
         </nav>
 
         <button
