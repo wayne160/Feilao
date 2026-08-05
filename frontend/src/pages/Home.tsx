@@ -26,13 +26,13 @@ function Home() {
         ))}
       </div>
 
-      <button
+      {/* <button
         type="button"
         className="mt-4 self-end rounded-lg border border-primary px-4 py-2 font-semibold text-primary"
         onClick={() => fetch(`${import.meta.env.VITE_API_BASE_URL}/print`)}
       >
         Print
-      </button>
+      </button> */}
 
       <button
         type="button"

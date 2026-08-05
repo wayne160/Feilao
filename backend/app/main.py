@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.db import init_db
 from app.routers import health
-from app.routers import print as print_router
+# from app.routers import print as print_router
 from app.routers import print_queue
 
 load_dotenv()
@@ -21,7 +21,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Feilao API", lifespan=lifespan)
 
-FRONTEND_URL = os.getenv("CORS_ORIGINS")
+FRONTEND_URL = os.getenv("FRONTEND_URL")
 
 app.add_middleware(
     CORSMiddleware,
