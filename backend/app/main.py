@@ -23,7 +23,7 @@ app = FastAPI(title="Feilao API", lifespan=lifespan)
 
 FRONTEND_URL = os.getenv("FRONTEND_URL")
 
-print(FRONTEND_URL)
+print("hello " + FRONTEND_URL)
 
 app.add_middleware(
     CORSMiddleware,
