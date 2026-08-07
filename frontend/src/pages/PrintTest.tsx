@@ -56,13 +56,13 @@ function PrintTest() {
   return (
     <div className="flex flex-1 flex-col items-center gap-4 p-4">
       <h1 className="text-xl font-semibold text-primary">Print Test</h1>
-      <div className="flex gap-2">
-        <input
-          type="text"
+      <div className="flex items-start gap-2">
+        <textarea
           className="rounded-lg border border-primary px-4 py-2 text-primary"
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder="Print content"
+          rows={4}
         />
         <button
           type="button"
