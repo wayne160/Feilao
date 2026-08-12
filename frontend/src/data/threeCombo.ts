@@ -1,15 +1,5 @@
-
-export type ProteinId =
-  | 'Beef'
-  | 'Crispy Pork'
-  | 'BBQ Pork'
-  | 'Pork Tripe'
-  | 'Beef Tripe'
-  | 'Intestines'
-  | 'Grilled Sausage';
-
 export type ComboOption = {
-  proteins: ProteinId[];
+  proteins: string[];
   price: number;
 };
 

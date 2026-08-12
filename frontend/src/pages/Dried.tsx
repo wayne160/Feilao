@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import heroImage from '../assets/hero.png'
 import { oneCombos } from '../data/oneCombo'
-// import { twoCombos } from '../data/twoCombo'
-// import { threeCombos } from '../data/threeCombo'
+import { twoCombos } from '../data/twoCombo'
+import { threeCombos } from '../data/threeCombo'
 
 const combos = ['1 Combination', '2 Combinations', '3 Combinations']
 const meats = ['Beef', 'Crispy Pork', 'BBQ Pork', 'Intestines', 'Beef Tripe', 'Pork Tripe', 'Grilled Sausage']
@@ -24,10 +24,22 @@ function Dried() {
 
         setSelectedMeats(next)
 
-        if (comboNumber === 1) {
-            const combo = oneCombos.find((c) => c.protein === next[0])
-            setPriceRange({ min: combo?.price || 0, max: combo?.price || 0 })
+        let combos = null;
+        switch (comboNumber) {
+            case 1:
+                combos = oneCombos;
+                break;
+            case 2:
+                combos = twoCombos;
+                break;
+            case 3:
+                combos = threeCombos;
+                break;
+            default:
+                break;
         }
+        const filtered = combos?.filter((c) => next.every((meat) => c.proteins.includes(meat))) ?? []
+        setPriceRange({ min: Math.min(...filtered.map((c) => c.price)), max: Math.max(...filtered.map((c) => c.price)) })
     }
 
     useEffect(() => {
@@ -90,7 +102,9 @@ function Dried() {
                         <input
                             type="checkbox"
                             checked={extraNoodles}
-                            onChange={() => setExtraNoodles((prev) => !prev)}
+                            onChange={() => {
+                                setExtraNoodles((prev) => !prev)
+                            }}
                             className="peer sr-only"
                         />
                         <div className="h-6 w-11 rounded-full bg-primary/20 transition-colors peer-checked:bg-primary" />
@@ -119,7 +133,7 @@ function Dried() {
                     })}
                 </div>
             </div>
-            {priceRange?.min}-{priceRange?.max}
+            {priceRange && (priceRange.min + (extraNoodles ? 1 : 0) + (extraMeat ? 8 : 0))}-{priceRange && (priceRange.max + (extraNoodles ? 1 : 0) + (extraMeat ? 8 : 0))}
         </div>
     )
 }

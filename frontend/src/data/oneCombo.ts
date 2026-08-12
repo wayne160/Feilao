@@ -1,24 +1,14 @@
-
-export type ProteinId =
-  | 'Beef'
-  | 'Crispy Pork'
-  | 'BBQ Pork'
-  | 'Pork Tripe'
-  | 'Beef Tripe'
-  | 'Intestines'
-  | 'Grilled Sausage';
-
 export type ComboOption = {
-  protein: ProteinId;
+  proteins: string[];
   price: number;
 };
 
 export const oneCombos: ComboOption[] = [
-  { protein: 'Beef', price: 17 },
-  { protein: 'Crispy Pork', price: 17 },
-  { protein: 'BBQ Pork', price: 16 },
-  { protein: 'Pork Tripe', price: 16 },
-  { protein: 'Beef Tripe', price: 17 },
-  { protein: 'Intestines', price: 25 },
-  { protein: 'Grilled Sausage', price: 17 },
+  { proteins: ['Beef'], price: 17 },
+  { proteins: ['Crispy Pork'], price: 17 },
+  { proteins: ['BBQ Pork'], price: 16 },
+  { proteins: ['Pork Tripe'], price: 16 },
+  { proteins: ['Beef Tripe'], price: 17 },
+  { proteins: ['Intestines'], price: 25 },
+  { proteins: ['Grilled Sausage'], price: 17 },
 ]
